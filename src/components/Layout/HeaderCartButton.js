@@ -16,7 +16,7 @@ const HeaderCartButton = (props) => {
 		return (
 			currentNumber + item.amount
 		)
-	}, 1 );
+	}, 0 );
 
 	
 
