@@ -14,11 +14,31 @@ const cartReducer = (state, action) => {
 	if (action.type === "Add_Cart_Item") {
 		const updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount;
 
-		//const existingCartItemIndex = state.items.findIndex();
-		// .concat(); встроенный метод в js, добавляет в массив элемент и дает новый массив, а не ссылку
-		const updatedItems = state.items.concat(action.item);
-		
+		// если есть этот элемент, вернет нам его
+		const existingCartItemIndex = state.items.findIndex(
+			item => item.id === action.item.id
+		);
 
+		const existingCartItem = state.items[existingCartItemIndex];
+		
+		let updatedItems;
+
+		if (existingCartItem) {
+			
+			const updatedItem = {
+				...existingCartItem,
+				amount: existingCartItem.amount + action.item.amount
+			}
+
+			updatedItems = [...state.items];
+			updatedItems[existingCartItemIndex] = updatedItem;
+		} else {
+			
+			// .concat(); встроенный метод в js, добавляет в массив элемент и дает новый массив, а не ссылку
+			updatedItems = state.items.concat(action.item);
+		}
+
+	
 		return {
 			items: updatedItems,
 			totalAmount: updatedTotalAmount
