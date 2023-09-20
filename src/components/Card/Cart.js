@@ -12,11 +12,11 @@ const cartCtx =	useContext(CartContext); // вызываем хук и указ�
 	const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
 
 	const cartItemRemoveHandler = (id) => {
-
+		cartCtx.removeItem(id);
 	}
 
-	const cartItemAddHandler = (name) => {
-
+	const cartItemAddHandler = (item) => {
+		cartCtx.addItem({...item, amount: 1});
 	}
 
 	const cartItems = <ul className={style["cart-items"]}>{cartCtx.items.map(item => (
@@ -25,7 +25,7 @@ const cartCtx =	useContext(CartContext); // вызываем хук и указ�
 				name={item.name} 
 				amount={item.amount} 
 				price={item.price}
-				onRemove={cartItemRemoveHandler.bind(null, item)}
+				onRemove={cartItemRemoveHandler.bind(null, item.id)}
 				onAdd={cartItemAddHandler.bind(null, item)}
 			/>
 		)
